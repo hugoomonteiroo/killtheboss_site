@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KILLTHEBOSS® — Branded Entertainment Studio</title>
+<meta name="description" content="KillTheBoss — Branded Entertainment Studio. BR & US based. Let's kill the ads. Let's build stories.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Anton&family=Bebas+Neue&family=Playfair+Display:wght@700&family=Courier+Prime&family=Syne:wght@700&family=Space+Grotesk:wght@700&family=Archivo+Black&family=Unbounded:wght@700&family=Big+Shoulders+Display:wght@700&family=Rubik+Mono+One&family=Permanent+Marker&family=IBM+Plex+Mono:wght@600&family=DM+Serif+Display&family=Six+Caps&family=Bungee&family=Abril+Fatface&family=Righteous&family=Pacifico&family=Caveat:wght@700&family=Staatliches&family=Monoton&family=Press+Start+2P&family=VT323&family=Zilla+Slab:wght@700&family=Cormorant+Garamond:wght@700&family=Oswald:wght@700&family=Barlow+Condensed:wght@700&family=Fjalla+One&family=Kanit:wght@700&family=Sora:wght@700&family=Special+Elite&family=Cutive+Mono&family=Shrikhand&family=Passion+One:wght@700&family=Fraunces:wght@700&family=Libre+Caslon+Display&family=Bricolage+Grotesque:wght@700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ KILLTHEBOSS® — Design tokens ============ */
+  @font-face{font-family:'Glyphic Sans';src:url('../assets/fonts/GlyphicSans-Thin.otf') format('opentype');font-weight:100;font-style:normal;font-display:swap}
+  @font-face{font-family:'Glyphic Sans';src:url('../assets/fonts/GlyphicSans-Light.otf') format('opentype');font-weight:300;font-style:normal;font-display:swap}
+  @font-face{font-family:'Glyphic Sans';src:url('../assets/fonts/GlyphicSans-Medium.otf') format('opentype');font-weight:500;font-style:normal;font-display:swap}
+  @font-face{font-family:'Glyphic Sans';src:url('../assets/fonts/GlyphicSans-Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:'Glyphic Sans';src:url('../assets/fonts/GlyphicSans-Extrabold.otf') format('opentype');font-weight:800;font-style:normal;font-display:swap}
+
+  :root{
+    --ink:#0A0A0A; --carbon:#141414; --graphite:#262626; --line:#2C2C2C; --ash:#4D4D4D;
+    --smoke:#8A867E; --fog:#C9C5BC; --bone:#F2EEE5; --paper:#FAF8F3; --white:#FFFFFF;
+    --signal-deep:#B81E0E; --signal:#F5331F; --signal-soft:#FF6A57;
+    --font-display:'Glyphic Sans',system-ui,-apple-system,sans-serif;
+    --font-mono:'Space Mono',ui-monospace,Menlo,Consolas,monospace;
+    --ease:cubic-bezier(.2,.6,.2,1);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;min-height:100%;background:var(--ink)}
+  body{
+    font-family:var(--font-display);
+    color:var(--bone);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    selection-background-color:var(--signal);
+  }
+  ::selection{background:var(--signal);color:var(--ink)}
+
+  .stage{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+
+  /* ---------- ambient CRT texture ---------- */
+  .crt{position:fixed;inset:0;pointer-events:none;z-index:5}
+  .crt.scan{
+    background:repeating-linear-gradient(to bottom, rgba(255,255,255,.055) 0 1px, transparent 1px 3px);
+    animation:ktbScan 1s steps(3) infinite;
+    opacity:.6;
+  }
+  .crt.grain{
+    mix-blend-mode:overlay; opacity:.1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .crt.vignette{
+    background:radial-gradient(120% 78% at 50% 42%, transparent 40%, rgba(0,0,0,.6) 100%);
+  }
+  @keyframes ktbScan{0%{background-position:0 0}100%{background-position:0 6px}}
+
+  /* ---------- header ---------- */
+  header.topbar{
+    position:relative; z-index:7;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+    padding:clamp(18px,3vh,28px) clamp(20px,4vw,48px);
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--smoke);
+  }
+  header.topbar .mark{color:var(--fog)}
+  header.topbar .mark sup{color:var(--signal);font-size:.85em}
+  header.topbar .studio{flex:1;text-align:center;color:var(--smoke)}
+  header.topbar .region{color:var(--fog);white-space:nowrap}
+
+  /* ---------- hero ---------- */
+  main.hero{
+    position:relative; z-index:7;
+    flex:1;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 20px;
+  }
+
+  .hero-block{
+    display:flex; flex-direction:column; align-items:flex-start;
+    gap:clamp(14px,2.6vh,28px);
+    text-align:left;
+  }
+
+  .logo-wrap{
+    position:relative;
+    margin:0;
+    filter:drop-shadow(0 18px 44px rgba(0,0,0,.6));
+  }
+  .logo{
+    display:block;
+    /* real layout size is always the FINAL, small, settled size — the box never
+       resizes, so centering never shifts. "Big during the animation" is done
+       purely with transform:scale below, which is GPU-composited and doesn't
+       trigger layout/reflow — this is what makes the motion fluid. */
+    font-size:clamp(26px,6.6vw,84px);
+    font-weight:800;
+    color:var(--bone);
+    line-height:1.02;
+    letter-spacing:-.03em;
+    transform-origin:center center;
+    transform:scale(2.65); /* visually big during the scramble */
+    transition:transform 1.3s cubic-bezier(.22,1,.36,1), filter 1.3s cubic-bezier(.22,1,.36,1), opacity 1.1s cubic-bezier(.22,1,.36,1);
+    filter:blur(0px);
+    opacity:1;
+    will-change:transform, filter, opacity;
+  }
+  .logo.settled{
+    transform:scale(1); /* eases down to true size — the official mark, smaller & easier to read */
+  }
+  .logo.pre-settle{
+    transition:none !important;
+    filter:blur(11px) brightness(1.18) saturate(1.15);
+    opacity:.42;
+  }
+  .logo .line1{display:block}
+  .logo .line2, .logo .line3{display:block}
+  .logo .scramble, .logo .scrambleB{
+    font-family:'Anton',sans-serif; /* overwritten inline during animation */
+    transition:none;
+  }
+  .logo .paren{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:.36em;
+    vertical-align:top;
+    opacity:0;
+    transform:translateY(-2px);
+    transition:opacity .4s var(--ease) .1s;
+    padding:0 .05em;
+    color:var(--fog);
+  }
+  .logo.settled .paren{opacity:1}
+  .logo .dot{color:var(--signal)}
+
+  .logo.settled .scramble, .logo.settled .scrambleB{font-family:var(--font-display)}
+
+  .logo.settled{text-shadow:.5px 0 rgba(255,61,20,.22),-.5px 0 rgba(0,229,255,.16)}
+
+  /* glitch pop lives on the wrapper, never on .logo itself — so it never fights
+     the font-size/filter/opacity transition that settles the mark. No more
+     competing `transform` = no more stiff, interrupted-looking motion. */
+  .logo-wrap.glitching{animation:ktbGlitchLogo .24s var(--ease)}
+
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.in{opacity:1;transform:translateY(0)}
+  .reveal.hide{display:none}
+  @keyframes ktbGlitchLogo{
+    0%,100%{transform:translate(0,0);filter:none}
+    30%{transform:translate(-3px,0);filter:drop-shadow(3px 0 rgba(255,61,20,.85)) drop-shadow(-3px 0 rgba(0,229,255,.7))}
+    60%{transform:translate(3px,0);filter:drop-shadow(-3px 0 rgba(255,61,20,.8)) drop-shadow(3px 0 rgba(0,229,255,.6))}
+    85%{transform:translate(-1.5px,0)}
+  }
+
+  .tagline{
+    margin:0;
+    white-space:nowrap;
+    font-weight:500;
+    font-size:clamp(10px,2.5vw,20px);
+    line-height:1.3;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    text-align:left;
+    color:var(--fog);
+  }
+  .tagline .strike{position:relative;color:var(--smoke)}
+  .tagline .strike::after{
+    content:"";position:absolute;left:-.06em;right:-.06em;top:52%;height:.09em;
+    background:var(--signal);transform:scaleX(0);transform-origin:left;
+    transition:transform .5s var(--ease) .15s;
+  }
+  .tagline.in .strike::after{transform:scaleX(1)}
+  .tagline .stories{color:var(--bone)}
+  .tagline .end-dot{color:var(--signal)}
+
+  /* ---------- footer ---------- */
+  footer.bottombar{
+    position:relative; z-index:7;
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(18px,3vh,28px) 20px;
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:.01em;
+    color:var(--fog);
+  }
+  footer.bottombar a{
+    color:inherit; text-decoration:none;
+    display:inline-flex; align-items:center; gap:.5em;
+    border-bottom:1px solid transparent;
+    transition:color .2s var(--ease), border-color .2s var(--ease);
+  }
+  footer.bottombar a:hover, footer.bottombar a:focus-visible{
+    color:var(--signal-soft);
+    border-color:currentColor;
+  }
+  footer.bottombar .email{font-family:var(--font-mono);font-size:.92em;letter-spacing:.02em}
+
+  @media (max-width:560px){
+    header.topbar{font-size:9.5px;letter-spacing:.14em}
+    header.topbar .studio{display:none}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .crt.scan{animation:none}
+    .reveal{transition:opacity .01s linear}
+    .logo{transition:none}
+    .logo.settled{text-shadow:none}
+  }
+</style>
+</head>
+<body>
+
+  <div class="crt scan" aria-hidden="true"></div>
+  <div class="crt grain" aria-hidden="true"></div>
+  <div class="crt vignette" aria-hidden="true"></div>
+
+  <div class="stage">
+    <header class="topbar">
+      <span class="mark">KILLTHEBOSS<sup>®</sup></span>
+      <span class="studio">Branded Entertainment Studio</span>
+      <span class="region">BR &amp; US Based</span>
+    </header>
+
+    <main class="hero">
+      <div class="hero-block">
+        <h1 class="logo-wrap" id="logoWrap">
+          <span class="logo" id="logo">
+            <span class="line1"><span class="scramble" id="scrambleKill">Kill</span><span class="paren">(the)</span><span class="scrambleB" id="scrambleBoss">Boss</span></span>
+            <span class="line2 reveal hide" id="line2">Entertainment</span>
+            <span class="line3 reveal hide" id="line3">Company<span class="dot">.</span></span>
+          </span>
+        </h1>
+        <p class="tagline reveal hide" id="tagline">
+          LET'S KILL <span class="strike">THE ADS.</span> LET'S BUILD <span class="stories">STORIES</span><span class="end-dot">.</span>
+        </p>
+      </div>
+    </main>
+
+    <footer class="bottombar">
+      <a href="mailto:hello@killtheboss.co">
+        <span>Let's take a coffee?</span>
+        <span class="email">Hello@killtheboss.co</span>
+      </a>
+    </footer>
+  </div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var logoWrap = document.getElementById('logoWrap');
+  var logo = document.getElementById('logo');
+  var kill = document.getElementById('scrambleKill');
+  var boss = document.getElementById('scrambleBoss');
+  var line2 = document.getElementById('line2');
+  var line3 = document.getElementById('line3');
+  var tagline = document.getElementById('tagline');
+
+  // reveals an element that was display:none (so it never reserved layout
+  // space while hidden — keeps the scramble truly centered on both axes)
+  function revealEl(el){
+    el.classList.remove('hide');
+    void el.offsetWidth;
+    requestAnimationFrame(function(){ el.classList.add('in'); });
+  }
+
+  function glitchPulse(duration){
+    logoWrap.classList.add('glitching');
+    setTimeout(function(){ logoWrap.classList.remove('glitching'); }, duration || 240);
+  }
+
+  var fonts = [
+    "'Anton',sans-serif","'Bebas Neue',sans-serif","'Playfair Display',serif",
+    "'Courier Prime',monospace","'Syne',sans-serif","'Space Grotesk',sans-serif",
+    "'Archivo Black',sans-serif","'Unbounded',sans-serif","'Big Shoulders Display',sans-serif",
+    "'Rubik Mono One',monospace","'Permanent Marker',cursive","'IBM Plex Mono',monospace",
+    "'DM Serif Display',serif","'Six Caps',sans-serif","'Bungee',sans-serif",
+    "'Abril Fatface',serif","'Righteous',sans-serif","'Pacifico',cursive",
+    "'Caveat',cursive","'Staatliches',sans-serif","'Monoton',sans-serif",
+    "'Press Start 2P',monospace","'VT323',monospace","'Zilla Slab',serif",
+    "'Cormorant Garamond',serif","'Oswald',sans-serif","'Barlow Condensed',sans-serif",
+    "'Fjalla One',sans-serif","'Kanit',sans-serif","'Sora',sans-serif",
+    "'Special Elite',monospace","'Cutive Mono',monospace","'Shrikhand',cursive",
+    "'Passion One',sans-serif","'Fraunces',serif","'Libre Caslon Display',serif",
+    "'Bricolage Grotesque',sans-serif"
+  ];
+
+  function revealAll(){
+    logo.classList.add('settled');
+    kill.style.fontFamily = '';
+    boss.style.fontFamily = '';
+    line2.classList.remove('hide'); line2.classList.add('in');
+    line3.classList.remove('hide'); line3.classList.add('in');
+    tagline.classList.remove('hide'); tagline.classList.add('in');
+  }
+
+  function settle(){
+    // 1) snap into a soft, hot blur while still mid-scramble — hides the font swap
+    logo.classList.add('pre-settle');
+    kill.style.fontFamily = '';
+    boss.style.fontFamily = '';
+    void logo.offsetWidth; // force paint of the blurred frame
+
+    // 2) next frame: rack-focus back into sharp — the "official" logo resolves out of the blur.
+    // font-size/filter/opacity all ease together on ONE unified timeline (1.15s), so the
+    // mark shrinks + sharpens + brightens as a single continuous motion, not separate pieces.
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        logo.classList.remove('pre-settle');
+        logo.classList.add('settled');
+
+        // the glitch "click" runs on the wrapper — a separate element from the one
+        // transitioning font-size/filter, so it never interrupts that easing
+        setTimeout(function(){ glitchPulse(260); }, 650);
+
+        setTimeout(function(){ revealEl(line2); }, 700);
+        setTimeout(function(){ revealEl(line3); }, 950);
+        setTimeout(function(){
+          revealEl(tagline);
+          startIdleGlitch();
+        }, 1350);
+      });
+    });
+  }
+
+  function runScramble(){
+    var step = 0;
+    var totalSteps = 20;
+    var delay = 42;
+    var prev = '';
+
+    function tick(){
+      if(step >= totalSteps){ settle(); return; }
+      var f;
+      do { f = fonts[Math.floor(Math.random()*fonts.length)]; } while(f === prev);
+      prev = f;
+      kill.style.fontFamily = f;
+      boss.style.fontFamily = f;
+      step++;
+      delay = delay * 1.13; // decelerate — long, cinematic wind-down
+      setTimeout(tick, delay);
+    }
+    tick();
+  }
+
+  function startIdleGlitch(){
+    if(reduced) return;
+    (function loop(){
+      var wait = 4500 + Math.random()*4000;
+      setTimeout(function(){
+        glitchPulse(240);
+        loop();
+      }, wait);
+    })();
+  }
+
+  if(reduced){
+    revealAll();
+  } else {
+    runScramble();
+  }
+})();
+</script>
+</body>
+</html>
