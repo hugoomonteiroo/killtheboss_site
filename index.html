@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Anton&family=Bebas+Neue&family=Playfair+Display:wght@700&family=Courier+Prime&family=Syne:wght@700&family=Space+Grotesk:wght@700&family=Archivo+Black&family=Unbounded:wght@700&family=Big+Shoulders+Display:wght@700&family=Rubik+Mono+One&family=Permanent+Marker&family=IBM+Plex+Mono:wght@600&family=DM+Serif+Display&family=Six+Caps&family=Bungee&family=Abril+Fatface&family=Righteous&family=Pacifico&family=Caveat:wght@700&family=Staatliches&family=Monoton&family=Press+Start+2P&family=VT323&family=Zilla+Slab:wght@700&family=Cormorant+Garamond:wght@700&family=Oswald:wght@700&family=Barlow+Condensed:wght@700&family=Fjalla+One&family=Kanit:wght@700&family=Sora:wght@700&family=Special+Elite&family=Cutive+Mono&family=Shrikhand&family=Passion+One:wght@700&family=Fraunces:wght@700&family=Libre+Caslon+Display&family=Bricolage+Grotesque:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Anton&family=Bebas+Neue&family=Courier+Prime&family=Archivo+Black&family=Big+Shoulders+Display:wght@700&family=Rubik+Mono+One&family=Permanent+Marker&family=IBM+Plex+Mono:wght@600&family=Six+Caps&family=Bungee&family=Bungee+Shade&family=Bungee+Inline&family=Pacifico&family=Caveat:wght@700&family=Staatliches&family=Monoton&family=Press+Start+2P&family=VT323&family=Special+Elite&family=Cutive+Mono&family=Shrikhand&family=Workbench&family=Rubik+Wet+Paint&family=Rubik+Spray+Paint&family=Rubik+Burned&family=Rubik+Glitch&family=Rubik+Beastly&family=Rubik+Moonrocks&family=Rubik+Dirt&family=Frijole&family=Nosifer&family=Creepster&family=Rock+Salt&family=Calligraffitti&family=Black+Ops+One&family=Alfa+Slab+One&family=Stardos+Stencil&family=Wallpoet&family=Titan+One&family=Bangers&family=Luckiest+Guy&family=Rampart+One&family=Bahiana&display=swap" rel="stylesheet">
 
 <style>
   /* ============ KILLTHEBOSS® — Design tokens ============ */
@@ -128,10 +128,11 @@
   }
   .logo .line1{display:block}
   .logo .line2, .logo .line3{display:block}
-  .logo .scramble, .logo .scrambleB{
+  .logo .scramble{
     font-family:'Anton',sans-serif; /* overwritten inline during animation */
     transition:none;
   }
+  .logo .finalMark{display:none}
   .logo .paren{
     font-family:var(--font-display);
     font-weight:500;
@@ -145,8 +146,6 @@
   }
   .logo.settled .paren{opacity:1}
   .logo .dot{color:var(--signal)}
-
-  .logo.settled .scramble, .logo.settled .scrambleB{font-family:var(--font-display)}
 
   .logo.settled{text-shadow:.5px 0 rgba(255,61,20,.22),-.5px 0 rgba(0,229,255,.16)}
 
@@ -243,7 +242,10 @@
       <div class="hero-block">
         <h1 class="logo-wrap" id="logoWrap">
           <span class="logo" id="logo">
-            <span class="line1"><span class="scramble" id="scrambleKill">Kill</span><span class="paren">(the)</span><span class="scrambleB" id="scrambleBoss">Boss</span></span>
+            <span class="line1">
+              <span class="scramble" id="scrambleWord">KillTheBoss</span>
+              <span class="finalMark" id="finalMark">Kill<span class="paren">(the)</span>Boss</span>
+            </span>
             <span class="line2 reveal hide" id="line2">Entertainment</span>
             <span class="line3 reveal hide" id="line3">Company<span class="dot">.</span></span>
           </span>
@@ -267,8 +269,8 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var logoWrap = document.getElementById('logoWrap');
   var logo = document.getElementById('logo');
-  var kill = document.getElementById('scrambleKill');
-  var boss = document.getElementById('scrambleBoss');
+  var scrambleWord = document.getElementById('scrambleWord');
+  var finalMark = document.getElementById('finalMark');
   var line2 = document.getElementById('line2');
   var line3 = document.getElementById('line3');
   var tagline = document.getElementById('tagline');
@@ -287,35 +289,41 @@
   }
 
   var fonts = [
-    "'Anton',sans-serif","'Bebas Neue',sans-serif","'Playfair Display',serif",
-    "'Courier Prime',monospace","'Syne',sans-serif","'Space Grotesk',sans-serif",
-    "'Archivo Black',sans-serif","'Unbounded',sans-serif","'Big Shoulders Display',sans-serif",
-    "'Rubik Mono One',monospace","'Permanent Marker',cursive","'IBM Plex Mono',monospace",
-    "'DM Serif Display',serif","'Six Caps',sans-serif","'Bungee',sans-serif",
-    "'Abril Fatface',serif","'Righteous',sans-serif","'Pacifico',cursive",
-    "'Caveat',cursive","'Staatliches',sans-serif","'Monoton',sans-serif",
-    "'Press Start 2P',monospace","'VT323',monospace","'Zilla Slab',serif",
-    "'Cormorant Garamond',serif","'Oswald',sans-serif","'Barlow Condensed',sans-serif",
-    "'Fjalla One',sans-serif","'Kanit',sans-serif","'Sora',sans-serif",
-    "'Special Elite',monospace","'Cutive Mono',monospace","'Shrikhand',cursive",
-    "'Passion One',sans-serif","'Fraunces',serif","'Libre Caslon Display',serif",
-    "'Bricolage Grotesque',sans-serif"
+    // typewriter / industrial mono
+    "'Courier Prime',monospace","'Special Elite',monospace","'Cutive Mono',monospace",
+    "'IBM Plex Mono',monospace","'VT323',monospace","'Press Start 2P',monospace","'Workbench',monospace",
+    // graffiti / spray / marker drip
+    "'Rubik Wet Paint',cursive","'Rubik Spray Paint',cursive","'Rubik Burned',cursive","'Rubik Dirt',sans-serif",
+    "'Permanent Marker',cursive","'Frijole',cursive","'Nosifer',cursive","'Creepster',cursive",
+    "'Rock Salt',cursive","'Calligraffitti',cursive",
+    // street poster / stencil / military
+    "'Anton',sans-serif","'Bebas Neue',sans-serif","'Six Caps',sans-serif","'Black Ops One',sans-serif",
+    "'Alfa Slab One',sans-serif","'Stardos Stencil',sans-serif","'Wallpoet',sans-serif","'Staatliches',sans-serif",
+    "'Titan One',sans-serif","'Bangers',sans-serif","'Luckiest Guy',sans-serif","'Bungee',sans-serif",
+    "'Bungee Shade',sans-serif","'Bungee Inline',sans-serif","'Rampart One',sans-serif",
+    // glitch / digital / mutant
+    "'Rubik Glitch',sans-serif","'Monoton',sans-serif","'Rubik Beastly',sans-serif","'Rubik Moonrocks',sans-serif",
+    // decorative script / bold display — kept for contrast against the above
+    "'Pacifico',cursive","'Caveat',cursive","'Shrikhand',cursive","'Bahiana',sans-serif",
+    "'Archivo Black',sans-serif","'Big Shoulders Display',sans-serif","'Rubik Mono One',monospace"
   ];
 
   function revealAll(){
     logo.classList.add('settled');
-    kill.style.fontFamily = '';
-    boss.style.fontFamily = '';
+    scrambleWord.style.display = 'none';
+    finalMark.style.display = 'inline';
     line2.classList.remove('hide'); line2.classList.add('in');
     line3.classList.remove('hide'); line3.classList.add('in');
     tagline.classList.remove('hide'); tagline.classList.add('in');
   }
 
   function settle(){
-    // 1) snap into a soft, hot blur while still mid-scramble — hides the font swap
+    // 1) snap into a soft, hot blur while still mid-scramble — hides the swap
+    //    from the cycling "KillTheBoss" word to the official styled mark
+    //    (Kill + the superscript "(the)" + Boss)
     logo.classList.add('pre-settle');
-    kill.style.fontFamily = '';
-    boss.style.fontFamily = '';
+    scrambleWord.style.display = 'none';
+    finalMark.style.display = 'inline';
     void logo.offsetWidth; // force paint of the blurred frame
 
     // 2) next frame: rack-focus back into sharp — the "official" logo resolves out of the blur.
@@ -351,8 +359,7 @@
       var f;
       do { f = fonts[Math.floor(Math.random()*fonts.length)]; } while(f === prev);
       prev = f;
-      kill.style.fontFamily = f;
-      boss.style.fontFamily = f;
+      scrambleWord.style.fontFamily = f;
       step++;
       delay = delay * 1.13; // decelerate — long, cinematic wind-down
       setTimeout(tick, delay);
@@ -371,10 +378,51 @@
     })();
   }
 
-  if(reduced){
-    revealAll();
+  // Preload every scramble font before the animation starts. Two failure modes
+  // this guards against:
+  // 1) document.fonts.load() only works once the @font-face rules from the
+  //    Google Fonts <link> actually exist in the document — if this script
+  //    runs before that stylesheet has finished downloading/parsing, load()
+  //    can silently fail to match anything. Waiting for window 'load' (fired
+  //    only once every external resource, including that stylesheet, is in)
+  //    removes that race condition entirely.
+  // 2) Some fonts only ship one weight — requesting a weight that doesn't
+  //    exist can reject. Each request is wrapped so one failure never blocks
+  //    the rest, and a hard timeout guarantees we never hang forever if a
+  //    font (or all of them) can't be reached at all — e.g. a browser
+  //    privacy/ad-block extension or network filter blocking Google's font
+  //    CDN outright. In that specific case no in-page fix can force the
+  //    request through; the animation still degrades gracefully to whatever
+  //    fonts *did* load, using the fallback (sans-serif/monospace/cursive)
+  //    for the rest instead of hanging.
+  function preloadFonts(){
+    if(!(window.FontFace && document.fonts && document.fonts.load)){
+      return Promise.resolve();
+    }
+    var names = fonts.map(function(f){ return f.split("'")[1]; });
+    var loads = names.map(function(name){
+      return Promise.all([
+        document.fonts.load('400 100px "' + name + '"').catch(function(){}),
+        document.fonts.load('700 100px "' + name + '"').catch(function(){})
+      ]);
+    });
+    var allSettled = Promise.all(loads);
+    var timeout = new Promise(function(resolve){ setTimeout(resolve, 2500); });
+    return Promise.race([allSettled, timeout]);
+  }
+
+  function boot(){
+    if(reduced){
+      revealAll();
+    } else {
+      preloadFonts().then(runScramble);
+    }
+  }
+
+  if(document.readyState === 'complete'){
+    boot();
   } else {
-    runScramble();
+    window.addEventListener('load', boot);
   }
 })();
 </script>
